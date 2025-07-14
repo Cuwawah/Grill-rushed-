@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grill Rushed - Digital Ad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Basic Resets & Global Styles */
+        :root {
+            --color-red: #CC0000; /* Vibrant Red from logo */
+            --color-gold: #FFD700; /* Standard Gold accent */
+            --color-dark: #1A1A1A; /* Very dark grey, almost black */
+            --color-light: #F0F0F0; /* Off-white for text/elements */
+            --font-headline: 'Montserrat', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-light);
+            background-color: var(--color-dark);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            -webkit-font-smoothing: antialiased; /* Better font rendering */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-headline);
+            color: var(--color-light);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--color-gold); /* Accent for section titles */
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Subtle glow */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-red);
+            color: var(--color-light);
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative; /* For shine effect */
+            overflow: hidden; /* For shine effect */
+        }
+
+        /* Button Shine Effect */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(-20deg);
+            transition: transform 0.3s ease;
+        }
+        .btn:hover::before {
+            transform: skewX(-20deg) translateX(150%);
+        }
+
+        .btn:hover {
+            background-color: var(--color-gold);
+            color: var(--color-dark);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* Changed to column to stack logo and name */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: radial-gradient(circle at center, rgba(var(--color-red), 0.4) 0%, var(--color-dark) 70%);
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Smoke Effect (CSS Animation) */
+        .smoke-effect {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%);
+            opacity: 0.2;
+            animation: smokeFloat 20s infinite ease-in-out alternate;
+            transform-origin: center center;
+            /* Adjust origin/size for more subtle effect */
+            top: -25%; left: -25%;
+        }
+        @keyframes smokeFloat {
+            0% { transform: scale(1) translateX(0) translateY(0); opacity: 0.1; }
+            50% { transform: scale(1.1) translateX(5%) translateY(5%); opacity: 0.25; }
+            100% { transform: scale(1) translateX(0) translateY(0); opacity: 0.1; }
+        }
+
+        /* Ember/Spark Effect (CSS Animation) - for static representation */
+        /* JS will create dynamic ones, but these are fallback/initial */
+        .ember-spark-static {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: rgba(255, 100, 0, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 100, 0, 0.5);
+            animation: sparkFloat 5s infinite ease-out forwards;
+        }
+        /* Positions for static sparks */
+        .ember-spark-static:nth-child(1) { left: 10%; top: 80%; animation-delay: 0.5s; }
+        .ember-spark-static:nth-child(2) { left: 30%; top: 90%; animation-delay: 1.2s; width: 4px; height: 4px; }
+        .ember-spark-static:nth-child(3) { left: 60%; top: 75%; animation-delay: 2s; }
+        @keyframes sparkFloat {
+            0% { transform: translateY(0) scale(1); opacity: 0.7; }
+            100% { transform: translateY(-200vh) scale(0.2); opacity: 0; } /* Go full viewport height */
+        }
+        /* Styles for JS generated sparks */
+        .ember-spark {
+            position: absolute;
+            background-color: rgba(255, 100, 0, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 100, 0, 0.5);
+            animation: sparkFloatJS linear forwards; /* JS controls properties */
+            pointer-events: none;
+        }
+        @keyframes sparkFloatJS {
+            0% { transform: translateY(0) scale(1); opacity: 0.7; }
+            100% { transform: translateY(-100vh) scale(0.2); opacity: 0; }
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            display: flex; /* Flexbox for logo and name */
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 150px; /* Adjust size */
+            height: auto;
+            margin-bottom: 0.5rem; /* Reduced margin to bring closer to name */
+            /* filter: drop-shadow(0 0 15px var(--color-red)); */ /* GSAP will handle initial glow */
+            /* animation: logoPulse 2s infinite alternate ease-in-out; */ /* GSAP will handle initial pulse */
+        }
+        /* CSS pulse for after GSAP completes, or fallback */
+        @keyframes logoPulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--color-red)); }
+            100% { transform: scale(1.03); filter: drop-shadow(0 0 25px var(--color-red)); }
+        }
+
+        /* Added style for restaurant name */
+        .restaurant-name {
+            font-family: var(--font-headline);
+            font-size: 3rem; /* Adjust size as needed */
+            font-weight: 700;
+            color: var(--color-gold); /* Using accent color */
+            margin-bottom: 2rem; /* Space before headline */
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.6);
+            opacity: 0; /* Hidden by default, revealed by JS */
+            transform: translateY(20px);
+        }
+
+
+        .headline {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        .headline span {
+            display: inline-block; /* Allows individual word animation */
+            opacity: 0; /* Hidden by default, revealed by JS */
+            transform: translateY(20px);
+        }
+        .subheadline {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--color-light);
+            opacity: 0; /* Hidden by default, revealed by JS */
+            transform: translateY(20px);
+        }
+
+        /* --- Main Content Sections --- */
+        main {
+            padding: 4rem 0;
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0; /* Hidden for scroll reveal */
+            transform: translateY(50px); /* Initial position for scroll reveal */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-highlights {
+            background-color: rgba(var(--color-light), 0.05); /* Slightly lighter dark background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            margin-bottom: 4rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background-color: var(--color-dark);
+            border: 1px solid rgba(var(--color-light), 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5); /* Gold hover glow */
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease; /* For on-scroll/hover animation */
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.05); /* Subtle zoom on image hover */
+        }
+
+        .menu-item h3 {
+            color: var(--color-gold);
+            font-size: 1.8rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item p {
+            color: var(--color-light);
+            font-size: 0.95rem;
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item .price {
+            font-family: var(--font-headline);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-red);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--color-gold);
+            color: var(--color-dark);
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--color-red);
+            color: var(--color-light);
+            transform: translateY(-2px);
+        }
+
+
+        /* --- Delivery Promise Section --- */
+        .delivery-promise {
+            text-align: center;
+            background: linear-gradient(to right, var(--color-red), var(--color-dark));
+            padding: 6rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            margin-top: 4rem; /* Add some space above */
+        }
+
+        .delivery-promise h2 {
+            color: var(--color-light); /* Override for this section */
+            text-shadow: none;
+            font-size: 3rem;
+        }
+
+        .delivery-promise p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .delivery-icon {
+            width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 10px var(--color-gold));
+            animation: deliveryBounce 1.5s infinite ease-in-out alternate;
+        }
+        @keyframes deliveryBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+
+        /* --- Call to Action Section --- */
+        .call-to-action {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 2rem;
+        }
+
+        .call-to-action h2 {
+            color: var(--color-light);
+        }
+
+        .primary-cta-btn {
+            font-size: 1.5rem;
+            padding: 1.2rem 3rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 0px 0px rgba(255, 215, 0, 0.7); /* Initial state for pulse */
+            animation: ctaPulse 2s infinite ease-in-out; /* CTA button pulse */
+        }
+
+        @keyframes ctaPulse {
+            0% { box-shadow: 0 0 0px 0px rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0px 15px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0px 0px rgba(255, 215, 0, 0); }
+        }
+
+
+        .social-icons {
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            display: inline-block;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon img {
+            width: 40px;
+            height: 40px;
+            /* Filter to make icons white initially: */
+            filter: brightness(0) invert(1) grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        .social-icon:hover img {
+            /* Filter to make icons gold on hover: */
+            filter: invert(80%) sepia(100%) saturate(7000%) hue-rotate(0deg) brightness(102%) contrast(105%);
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(0,0,0,0.3);
+            color: var(--color-light);
+            font-size: 0.9rem;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+        @media (max-width: 768px) {
+            .headline {
+                font-size: 2.5rem;
+            }
+            .subheadline {
+                font-size: 1rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-content, section {
+                padding: 1.5rem;
+            }
+            .delivery-promise h2 {
+                font-size: 2.5rem;
+            }
+            .restaurant-name {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .headline {
+                font-size: 2rem;
+            }
+            .logo {
+                width: 100px;
+            }
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .primary-cta-btn {
+                font-size: 1.2rem;
+                padding: 1rem 2rem;
+            }
+            .delivery-promise h2 {
+                font-size: 2rem;
+            }
+            .restaurant-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-section">
+        <div class="background-elements">
+            <div class="smoke-effect"></div>
+            <div class="ember-spark-static"></div>
+            <div class="ember-spark-static"></div>
+            <div class="ember-spark-static"></div>
+        </div>
+        <div class="hero-content">
+            <img src="f0fdbffa-ff8c-4ca3-b40a-c87343c7f117.jpeg" alt="Grill Rushed Logo" class="logo">
+            <h1 class="restaurant-name">Grill Rushed</h1>
+            <p class="headline">
+                <span class="word-1">Flavor</span> <span class="word-2">Unleashed,</span> <span class="word-3">Delivered</span> <span class="word-4">Fast!</span>
+            </p>
+            <p class="subheadline">Experience the sizzling taste of perfection, delivered right to your door.</p>
+            <a href="#cta" class="btn cta-button">Order Now!</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="menu-highlights">
+            <h2>Our Sizzling Specialties</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgU-Y-luDvhVbxIwWPait2BvhXAwZz1NoVtg&usqp=CAU" alt="Grilled Burger" data-scroll-reveal="bottom">
+                    <h3>The Rushed Burger</h3>
+                    <p>Juicy patty, secret sauce, fresh veggies – a classic, perfected.</p>
+                    <span class="price">$12.99</span>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="menu-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdBnhf5e3kipJqSPdL6cE-ShbTYHtfjnyF2Q&s" alt="BBQ Ribs" data-scroll-reveal="bottom" data-scroll-delay="0.2">
+                    <h3>Smoked BBQ Ribs</h3>
+                    <p>Fall-off-the-bone tenderness, slathered in our tangy BBQ sauce.</p>
+                    <span class="price">$18.50</span>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+                <div class="menu-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkhJmbH2jmPcEWnsbZOuLxgc6hkMY3CPkQzw&s" alt="Chicken Wings" data-scroll-reveal="bottom" data-scroll-delay="0.4">
+                    <h3>Fiery Hot Wings</h3>
+                    <p>Crispy, spicy, and perfectly sauced – a kick that keeps you craving.</p>
+                    <span class="price">$9.99</span>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="delivery-promise">
+            <div class="delivery-content">
+                <h2>Lightning-Fast Delivery</h2>
+                <p>We're not just about incredible taste; we're about getting it to you when you crave it, hot and fresh.</p>
+                <div class="animation-container">
+                    <img src="https://via.placeholder.com/150x150?text=Delivery+Icon" alt="Fast Delivery" class="delivery-icon">
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="call-to-action">
+            <h2>Ready to Taste the Rush?</h2>
+            <a href="#" class="btn primary-cta-btn">Order Online Now!</a>
+            <p>Or find us at 123 Grill St, Flavor City, FG 45678</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="https://via.placeholder.com/40x40?text=FB" alt="Facebook"></a>
+                <a href="#" class="social-icon"><img src="https://via.placeholder.com/40x40?text=IG" alt="Instagram"></a>
+                <a href="#" class="social-icon"><img src="https://via.placeholder.com/40x40?text=TW" alt="Twitter"></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Grill Rushed. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script>
+        // Register ScrollTrigger plugin (if using GSAP)
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Hero Section Animations (GSAP Timelines) ---
+        const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        heroTimeline
+            .from(".logo", {
+                opacity: 0,
+                y: -50,
+                scale: 0.8,
+                duration: 1,
+                filter: "drop-shadow(0 0 0px rgba(204, 0, 0, 0))", // Reset for initial animation
+                onComplete: () => {
+                    // Re-enable CSS pulsing after GSAP animation finishes
+                    document.querySelector('.logo').style.animation = 'logoPulse 2s infinite alternate ease-in-out';
+                }
+            })
+            // Added animation for the restaurant name
+            .from(".restaurant-name", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6") // Appears after logo
+            .from(".headline .word-1", { opacity: 0, y: 20, duration: 0.5 }, "-=0.3") // Overlap
+            .from(".headline .word-2", { opacity: 0, y: 20, duration: 0.5 })
+            .from(".headline .word-3", { opacity: 0, y: 20, duration: 0.5 })
+            .from(".headline .word-4", { opacity: 0, y: 20, duration: 0.5 })
+            .from(".subheadline", { opacity: 0, y: 20, duration: 0.8 }, "-=0.5")
+            .from(".cta-button", { opacity: 0, scale: 0.8, duration: 0.8, ease: "elastic.out(1, 0.5)" }, "-=0.3");
+
+
+        // --- Scroll Reveal for Sections (GSAP) ---
+        gsap.utils.toArray('section').forEach(section => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: 'top 80%', // When the top of the section hits 80% down the viewport
+                end: 'bottom top',
+                onEnter: () => section.classList.add('is-visible'),
+                onLeaveBack: () => section.classList.remove('is-visible') // Optional: hide when scrolling back up
+            });
+        });
+
+        // --- Scroll Reveal for Menu Items (GSAP) ---
+        gsap.utils.toArray('.menu-item img').forEach(img => {
+            const delay = parseFloat(img.dataset.scrollDelay) || 0; // Get delay from data attribute
+            gsap.from(img, {
+                scrollTrigger: {
+                    trigger: img,
+                    start: 'top 90%',
+                    toggleActions: 'play none none reverse' // Play on enter, reverse on leave back
+                },
+                opacity: 0,
+                y: 50,
+                scale: 0.8,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: delay // Apply individual delay
+            });
+        });
+
+
+        // --- Hover Effects (GSAP for smoother animations) ---
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('mouseover', () => {
+                gsap.to(button, { scale: 1.05, duration: 0.2, y: -3 });
+            });
+            button.addEventListener('mouseout', () => {
+                gsap.to(button, { scale: 1, duration: 0.2, y: 0 });
+            });
+        });
+
+        document.querySelectorAll('.social-icon').forEach(icon => {
+            const img = icon.querySelector('img'); // Get the image inside the anchor
+            icon.addEventListener('mouseover', () => {
+                gsap.to(icon, { rotation: 360, duration: 0.5, ease: "elastic.out(1, 0.5)" });
+                // Note: CSS filter change is handled by pure CSS :hover for simplicity
+            });
+            icon.addEventListener('mouseout', () => {
+                gsap.to(icon, { rotation: 0, duration: 0.3 });
+            });
+        });
+
+        // --- Simple JS for Generating Many Random Sparks (Optional - for a more dynamic feel) ---
+        // Creates a continuous stream of small, floating ember/spark elements.
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.classList.add('ember-spark');
+            const size = Math.random() * 8 + 2; // Random size between 2px and 10px
+            spark.style.width = `${size}px`;
+            spark.style.height = `${size}px`;
+            // Sparks can originate from bottom-left to bottom-right
+            spark.style.left = `${Math.random() * 100}%`;
+            spark.style.bottom = `-20px`; // Start just below the viewport
+            spark.style.opacity = Math.random() * 0.7 + 0.3; // Random opacity
+
+            // Generate a unique animation delay and duration for each spark for variety
+            const animationDuration = Math.random() * 4 + 4; // 4 to 8 seconds
+            const animationDelay = Math.random() * 2; // 0 to 2 seconds delay
+
+            spark.style.animation = `sparkFloatJS ${animationDuration}s ${animationDelay}s linear forwards`;
+
+            document.querySelector('.background-elements').appendChild(spark);
+
+            // Remove spark after animation to prevent DOM clutter and performance issues
+            spark.addEventListener('animationend', () => {
+                spark.remove();
+            });
+        }
+
+        // Generate sparks periodically
+        setInterval(createSpark, 150); // Create a new spark every 150ms for more density
+    </script>
+</body>
+</html>
