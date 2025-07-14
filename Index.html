@@ -199,7 +199,7 @@
             margin-top: 0; /* Ensures no extra space above the name */
             margin-bottom: 2rem; /* Space before headline */
             text-shadow: 3px 3px 8px rgba(0,0,0,0.6);
-            opacity: 0; /* Hidden by default, revealed by JS */
+            /* opacity: 0; /* Hidden by default, revealed by JS */ */
             transform: translateY(20px);
         }
 
@@ -450,7 +450,7 @@
                 font-size: 2rem;
             }
             .logo {
-                width: 150px; /* Adjusted for mobile view */
+                width: 150px;
             }
             .btn {
                 padding: 0.8rem 1.5rem;
@@ -532,9 +532,9 @@
             <a href="#" class="btn primary-cta-btn">Order Online Now!</a>
             <p>Or find us at 123 Grill St, Flavor City, FG 45678</p>
             <div class="social-icons">
-                <a href="#" class="social-icon"><img src="https://img.icons8.com/ios_filled/512/facebook-new.png" alt="Facebook"></a>
-                <a href="#" class="social-icon"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS6YthGlMqR39Ut5HPhVQJzJtMcUr3IdEYMg&usqp=CAU" alt="Instagram"></a>
-                <a href="#" class="social-icon"><img src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoBBq6Y287JCRZinB7gcFlUF5JPqEjxfauiVDgRoPlMlfHxDXT-TEOzaW6&s=10" alt="Twitter"></a>
+                <a href="#" class="social-icon"><img src="https://via.placeholder.com/40x40?text=FB" alt="Facebook"></a>
+                <a href="#" class="social-icon"><img src="https://via.placeholder.com/40x40?text=IG" alt="Instagram"></a>
+                <a href="#" class="social-icon"><img src="https://via.placeholder.com/40x40?text=TW" alt="Twitter"></a>
             </div>
         </section>
     </main>
@@ -565,7 +565,9 @@
                 }
             })
             // Added animation for the restaurant name
-            .from(".restaurant-name", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6") // Appears after logo
+            // We removed opacity: 0 from CSS, so it will be visible from the start.
+            // GSAP will still animate its y position.
+            .from(".restaurant-name", { y: 20, duration: 0.8 }, "-=0.6") // Appears after logo
             .from(".headline .word-1", { opacity: 0, y: 20, duration: 0.5 }, "-=0.3") // Overlap
             .from(".headline .word-2", { opacity: 0, y: 20, duration: 0.5 })
             .from(".headline .word-3", { opacity: 0, y: 20, duration: 0.5 })
